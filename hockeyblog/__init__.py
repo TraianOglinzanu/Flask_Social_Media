@@ -1,8 +1,12 @@
+import os
 from flask import Flask 
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 app = Flask(__name__)
+
+### Setting up Database ###
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URAI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
