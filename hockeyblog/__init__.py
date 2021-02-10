@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 
-### Setting up Database ###
+### Setting up database ###
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URAI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
@@ -14,6 +14,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = get_flashed_messages()
 
 db = SQLAlchemy(app)
 Migrate(app)
+
+### Setting up login configuration ###
+
+login_manager = LoginManager()
+
+login_manager.init_app(app)
+login_manager.login_view = 'users.login'
 
 from hockeyblog.core.views import core
 from hockeyblog.error_pages.handlers import error_pages
