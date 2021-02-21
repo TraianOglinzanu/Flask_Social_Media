@@ -24,6 +24,27 @@ def register():
 
 	return render_template('register.html', form=form)
 
+@users.route('/login', methods=['GET','POST'])
+def login():
+
+	form = LoginForm
+	if form.validate_on_submit():
+
+		user = User.query.filter_by(email=form.email.data).first()
+
+		if user.check_password(form.password.data) and user is not None:
+
+			login_user(User)
+			flash('Login in succeeded')
+
+			next = request.args.get('next')
+
+			if next == None or not next[0] == '/':
+				next = url_for('core.index')
+			return redirect(next)
+
+		return render_template('login.html', form=form)
+
 @users.route('/logout')
 def logout():
 
@@ -38,7 +59,7 @@ def account():
 	if form.validate_on_submit():
 
 		if form.picture.data:
-			username = current.user.username
+			username = current_user.username
 			pic = add_profile_pic(form.picture.data, username)
 			current_user.profile_image = pic
 
@@ -54,6 +75,13 @@ def account():
 
 	profile_image = url_for('static', filename='profile_pics/'+ current_user.profile_image)
 	return render_template('account.html', profile_image=profile_image, form=form)
+
+@users.route('/<username>')
+def user_posts(username):
+	pass
+
+
+
 
 
 
