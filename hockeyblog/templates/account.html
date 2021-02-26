@@ -3,28 +3,32 @@
 	<div class="jumbotron">
 		<div align="center">
 			<h1>Welcome to {{current_user.username}}'s page</h1>
-			<img align='center' src="{{url_for('static', filename='profile_pics/'+current_ser.profile_image)}}">
+			<img align='center' src="{{url_for('static', filename='profile_pics/'+current_user.profile_image)}}">
 		</div>
 	</div>
 
 	<div class="container">
 		<form method="POST">
+			 
 			{{form.hidden_tag()}}
 
 			<div class="form-group">
-				{{form.username.label(class='form-group')}}{{form.username}}
+				{{form.username.label(class='form-group')}}
+				{{form.username(classs='form-control')}}
 			</div>
 
 			<div class="form-group">
-				{{form.email.label}}{{form.email}}
+				{{form.email.label(class='form-group')}}
+				{{form.email(class='form-control')}}
 			</div>
 
 			<div class="form-group">
-				{{form.picture.label}}{{form.picture}}
+				{{form.picture.label(class='form-group')}}
+				{{form.picture(class='form-control')}}
 			</div>
 
 			<div class="form-group">
-				{{form.submit}}
+				{{form.submit(class='btn btn-primary')}}
 			</div>
 			
 		</form>

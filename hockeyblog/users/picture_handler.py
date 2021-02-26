@@ -16,4 +16,5 @@ def add_profile_pic(pic_upload, username):
     pic.thumbnail(output_size)
     pic.save(filepath)
 
+    #username.png
     return storage_filename

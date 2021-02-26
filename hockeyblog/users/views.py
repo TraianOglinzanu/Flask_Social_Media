@@ -34,13 +34,14 @@ def login():
 
 		if user.check_password(form.password.data) and user is not None:
 
-			login_user(User)
+			login_user(user)
 			flash('Login in succeeded')
 
 			next = request.args.get('next')
 
 			if next == None or not next[0] == '/':
-				next = url_for('core.index')
+				next = url_for('core.index') #homepage
+
 			return redirect(next)
 
 		return render_template('login.html', form=form)
@@ -67,7 +68,7 @@ def account():
 		current_user.email = form.email.data 
 		db.session.commit()
 		flash('Account Updated')
-		return redirect(url_for('users.account'))
+		return redirect(url_for('users.account')) #redirect to own account page
 
 	elif request.method == 'GET':
 		form.username.data = current_user.username
@@ -78,8 +79,11 @@ def account():
 
 @users.route('/<username>')
 def user_posts(username):
-	pass
-
+	
+	page = request.args.get('page',1,type=int)
+	user = User.query.filter_by(username=username).first_or_404()
+	blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
+	return render_template('user_blog_posts.html', blog_posts=blog_posts,user=user)
 
 
 

@@ -55,7 +55,7 @@ def update(blog_post_id):
         form.title.data = blog_post.title
         form.text.data = blog_post.text
 
-    return render_template('create_post.html', title='Updating', form=form)
+        return render_template('create_post.html', title='Updating', form=form)
 
 
 @blog_post.route('/<int:blog_post_id/delete',methods=['GET','POST'])
